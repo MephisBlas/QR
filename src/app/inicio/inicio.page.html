@@ -1,14 +1,20 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Página de Inicio
-    </ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Bienvenido</ion-title>
+    <div class="usuario-esquina-derecha">{{ usuarioString }}</div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- Contenido de la página -->
 
-  <!-- Botón de cierre de sesión -->
-  <ion-button expand="full" (click)="cerrarSesion()">Cerrar Sesión</ion-button>
+  Hola usuario pronto tendremos nuevas funciones.
+  
 </ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarSesion()">Cerrar Sesión</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+

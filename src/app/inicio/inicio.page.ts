@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Importa el Router para redireccionar
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,17 +8,19 @@ import { Router } from '@angular/router'; // Importa el Router para redirecciona
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
+  usuarioString: string | undefined; 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    
+    var usuarioString = localStorage.getItem('usuario');
+    this.usuarioString = usuarioString !== null ? JSON.parse(usuarioString).nombre : null;
   }
 
-  // Función para cerrar sesión
   cerrarSesion() {
-    // Aquí puedes realizar acciones para cerrar la sesión, como eliminar tokens de autenticación, etc.
-
-    // Luego, redirige a la página de inicio de sesión
-    this.router.navigate(['/login']); // Asegúrate de tener una ruta definida para la página de inicio de sesión
+    
+    this.authService.cerrarSesion(); 
+    this.router.navigate(['/login']); 
   }
 }

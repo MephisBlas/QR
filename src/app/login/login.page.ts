@@ -47,6 +47,8 @@ export class LoginPage implements OnInit {
         buttons: ['Aceptar']
       });
 
+      
+
       await alert.present();
     }
   }

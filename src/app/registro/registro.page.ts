@@ -22,6 +22,8 @@ export class RegistroPage implements OnInit {
       'correo': new FormControl("", [Validators.required, Validators.email]),
       'password': new FormControl("", [Validators.required, Validators.minLength(8)]),
       'confirmacionPassword': new FormControl("", Validators.required)
+    }, {
+      validators: this.checkNameAndPassword // Usar el validador personalizado
     });
   }
 
@@ -30,10 +32,41 @@ export class RegistroPage implements OnInit {
 
   async guardar() {
     var f = this.formularioRegistro.value;
-
+  
+    // Verificar si el correo ya está registrado
+    const usuariosRegistrados = localStorage.getItem('usuariosRegistrados');
+    if (usuariosRegistrados) {
+      const usuarios = JSON.parse(usuariosRegistrados);
+      if (usuarios.find((usuario: any) => usuario.email === f.correo)) {
+        const alert = await this.alertController.create({
+          header: 'Error',
+          message: 'El correo electrónico ya está registrado.',
+          buttons: ['Aceptar']
+        });
+        await alert.present();
+        return;
+      } else {
+        usuarios.push({
+          nombre: f.nombre,
+          password: f.password,
+          email: f.correo
+        });
+        localStorage.setItem('usuariosRegistrados', JSON.stringify(usuarios));
+      }
+    } else {
+      const usuario = {
+        nombre: f.nombre,
+        password: f.password,
+        email: f.correo
+      };
+      localStorage.setItem('usuariosRegistrados', JSON.stringify([usuario]));
+    }
+    localStorage.setItem('email', f.correo);
+    
+    
     if (this.formularioRegistro.invalid) {
       if (this.formularioRegistro.hasError('minlength', 'password')) {
-        // Mostrar alerta si la contraseña es muy corta
+
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'La contraseña debe tener al menos 8 caracteres.',
@@ -45,7 +78,7 @@ export class RegistroPage implements OnInit {
       }
 
       if (f.nombre.match(/\d/)) {
-        // Mostrar alerta si el nombre de usuario contiene números
+
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'El nombre de usuario no puede contener números.',
@@ -57,7 +90,7 @@ export class RegistroPage implements OnInit {
       }
 
       if (this.formularioRegistro.hasError('email', 'correo')) {
-        // Mostrar alerta si el correo electrónico no es válido
+
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'El correo electrónico no es válido.',
@@ -68,7 +101,7 @@ export class RegistroPage implements OnInit {
         return;
       }
 
-      // Mostrar alerta si hay campos vacíos u otros errores
+
       const alert = await this.alertController.create({
         header: 'Datos incompletos',
         message: 'Tienes que llenar todos los datos',
@@ -80,7 +113,7 @@ export class RegistroPage implements OnInit {
     }
 
     if (f.nombre === f.password) {
-      // Mostrar alerta si la contraseña es igual al nombre de usuario
+
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'La contraseña no puede ser igual al nombre de usuario.',
@@ -93,7 +126,8 @@ export class RegistroPage implements OnInit {
 
     var usuario = {
       nombre: f.nombre,
-      password: f.password
+      password: f.password,
+      email: f.correo
     }
 
     localStorage.setItem('usuario', JSON.stringify(usuario));
@@ -103,8 +137,9 @@ export class RegistroPage implements OnInit {
 
   // Custom validator
   checkNameAndPassword(group: FormGroup) {
-    const nombre = group.get('nombre')?.value; // Usar ?. para acceder de forma segura
-    const password = group.get('password')?.value; // Usar ?. para acceder de forma segura
+    const nombre = group.get('nombre')?.value;
+    const password = group.get('password')?.value;
+    
 
     if (nombre === password) {
       return { nameAndPasswordMatch: true };
