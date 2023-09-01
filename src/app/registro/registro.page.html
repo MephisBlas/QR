@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -19,24 +19,20 @@
           <ion-input formControlName="nombre"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="floating">Correo Electrónico</ion-label>
+          <ion-input formControlName="correo" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label position="floating">Contraseña</ion-label>
-          <ion-input formControlName="password" type="password" ></ion-input>
+          <ion-input formControlName="password" type="password"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Confirmar contraseña</ion-label>
           <ion-input formControlName="confirmacionPassword" type="password"></ion-input>
         </ion-item>
         <br>
-        <ion-button (click)="guardar()">Registrarse
-        </ion-button>
+        <ion-button (click)="guardar()">Registrarse</ion-button>
       </form>
     </ion-card-content>
   </ion-card>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="success">
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['/login']">Iniciar sesion</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
