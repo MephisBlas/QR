@@ -1,0 +1,54 @@
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{ Bienvenido}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content class="ion-padding">
+    <ion-button expand="full" fill="clear" [routerLink]="['/asignaturas']">Asignaturas</ion-button>
+    <ion-button expand="full" fill="clear" [routerLink]="['/horario']">Horario</ion-button>
+    <ion-button expand="full" fill="clear" [routerLink]="['/asistencia']">Asistencia</ion-button>
+    <ion-button expand="full" fill="clear" [routerLink]="['/cuenta']">Cuenta</ion-button>
+  </ion-content>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button expand="full" fill="clear" (click)="cerrarSesion()">
+        Cerrar Sesión
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <div class="usuario-esquina-derecha">{{ Bienvenido  +  usuarioString }}</div>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <!-- Contenido principal de la página -->
+  </ion-content>
+
+  
+  <ion-toolbar>
+    <ion-buttons class="ion-justify-content-center">
+      <ion-button class="custom-button" shape="round" color="primary">
+        <ion-icon name="camera"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <ion-footer>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="end">
+     
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</div>

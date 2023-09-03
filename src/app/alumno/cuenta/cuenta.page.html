@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Mostrar datos del usuario -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Datos del Usuario</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>Nombre:</ion-label>
+        <ion-text>{{ nombreDeUsuario }}</ion-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Correo Electrónico:</ion-label>
+        <ion-text>{{ correoDeUsuario }}</ion-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Rol:</ion-label>
+        <ion-text>{{ rolDeUsuario }}</ion-text>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <!-- Formulario para cambiar la contraseña -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Cambiar Contraseña</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>Contraseña Actual:</ion-label>
+        <ion-input [(ngModel)]="contrasenaActual" type="password"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Nueva Contraseña:</ion-label>
+        <ion-input [(ngModel)]="nuevaContrasena" type="password"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>Confirmar Contraseña:</ion-label>
+        <ion-input [(ngModel)]="confirmarNuevaContrasena" type="password"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-button expand="full" (click)="cambiarContrasena()">Cambiar Contraseña</ion-button>
+  </ion-toolbar>
+</ion-footer>

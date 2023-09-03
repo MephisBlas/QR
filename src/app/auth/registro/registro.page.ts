@@ -32,7 +32,7 @@ export class RegistroPage implements OnInit {
 
   async guardar() {
     var f = this.formularioRegistro.value;
-  
+
     // Verificar si el correo ya está registrado
     const usuariosRegistrados = localStorage.getItem('usuariosRegistrados');
     if (usuariosRegistrados) {
@@ -62,74 +62,66 @@ export class RegistroPage implements OnInit {
       localStorage.setItem('usuariosRegistrados', JSON.stringify([usuario]));
     }
     localStorage.setItem('email', f.correo);
-    
-    
+
+    // Asignar el rol "alumno" por defecto
+    const usuario = {
+      nombre: f.nombre,
+      password: f.password,
+      email: f.correo,
+      rol: 'alumno' // Asignar el rol "alumno" por defecto
+    };
+
     if (this.formularioRegistro.invalid) {
       if (this.formularioRegistro.hasError('minlength', 'password')) {
-
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'La contraseña debe tener al menos 8 caracteres.',
           buttons: ['Aceptar']
         });
-
         await alert.present();
         return;
       }
 
       if (f.nombre.match(/\d/)) {
-
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'El nombre de usuario no puede contener números.',
           buttons: ['Aceptar']
         });
-
         await alert.present();
         return;
       }
 
       if (this.formularioRegistro.hasError('email', 'correo')) {
-
         const alert = await this.alertController.create({
           header: 'Error',
           message: 'El correo electrónico no es válido.',
           buttons: ['Aceptar']
         });
-
         await alert.present();
         return;
       }
 
-
       const alert = await this.alertController.create({
         header: 'Datos incompletos',
-        message: 'Tienes que llenar todos los datos',
+        message: 'Tienes que llenar todos los datos.',
         buttons: ['Aceptar']
       });
-
       await alert.present();
       return;
     }
 
     if (f.nombre === f.password) {
-
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'La contraseña no puede ser igual al nombre de usuario.',
         buttons: ['Aceptar']
       });
-
       await alert.present();
       return;
     }
 
-    var usuario = {
-      nombre: f.nombre,
-      password: f.password,
-      email: f.correo
-    }
-
+    // Guardar el usuario con su rol en localStorage
     localStorage.setItem('usuario', JSON.stringify(usuario));
 
     this.router.navigate(['/login']);
@@ -139,7 +131,6 @@ export class RegistroPage implements OnInit {
   checkNameAndPassword(group: FormGroup) {
     const nombre = group.get('nombre')?.value;
     const password = group.get('password')?.value;
-    
 
     if (nombre === password) {
       return { nameAndPasswordMatch: true };
