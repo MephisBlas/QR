@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { NavController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { UserModalComponent } from 'src/app/user-modal/user-modal.component';
 
 @Component({
   selector: 'app-inicio',
@@ -15,8 +17,18 @@ export class InicioPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private modalController: ModalController
   ) { }
+
+  async abrirModal() {
+    console.log('Abriendo el modal...');
+    const modal = await this.modalController.create({
+      component: UserModalComponent,
+      backdropDismiss: false,
+    });
+    await modal.present();
+  }
 
   ngOnInit() {
     const estaAutenticado = this.authService.estaAutenticado();
@@ -25,6 +37,7 @@ export class InicioPage implements OnInit {
     if (estaAutenticado && rolUsuario === 'admin') {
       this.mostrarNombreUsuario = true;
       this.usuarioString = this.authService.obtenerNombreUsuario();
+      this.abrirModal(); // Abre el modal automáticamente cuando cumple con las condiciones
     }
   }
 
